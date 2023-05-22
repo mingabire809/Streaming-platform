@@ -19,7 +19,7 @@
                 <iframe class="embed-responsive-item w-100 h-100" src="/storage/<?php echo e($video->video); ?>" allowfullscreen></iframe>
               </div>
             </div>
-            <div class="d-flex justify-content-between mt-3">
+            <div class="d-flex justify-content-between">
               <button class="btn btn-primary">Previous</button>
               <button class="btn btn-primary">Next</button>
             </div>

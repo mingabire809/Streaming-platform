@@ -37,13 +37,14 @@
                         
                     </ul>
 
-                    <form class="w-75 row mt-3 form-group" action="">
+                    <form class="w-75 row mt-3 form-group" action="/search" method="GET">
                         <div class="col-md-9 mb-3">
                           <input type="search"
-                         
+                         name="title"
+                         id="title"
                           class="form-control" 
                           placeholder="Search ..." 
-                          aria-label="Search" />
+                          aria-label="Search" required/>
                         </div>
                        
                      <div class="col-md-3">
