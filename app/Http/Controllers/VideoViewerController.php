@@ -39,12 +39,14 @@ class VideoViewerController extends Controller
         $today = Carbon::now();
         $difference = $video->created_at -> diffForHumans($today);
         $videos = Video::whereNotIn('id', $video)->latest()->get();
-        $items = Video::pluck('id')->toArray();
+        $array = Video::pluck('id')->toArray();
         $elements = $video->id;
-        $index = array_search($elements, $items);
-
-        $comments = Comment::whereIn('video_id', $video)->latest()->get();
-        //return $index;
-        return view('video.show', compact('video', 'difference', 'videos', 'comments', 'index'));
+        $index = array_search($elements, $array);
+        
+        $comments = $video->comment;
+        
+        //$comments = Comment::whereIn('video_id', $video)->latest()->get();
+        //return $array;
+        return view('video.show', compact('video', 'difference', 'videos', 'comments', 'index', 'today', 'array'));
     }
 }

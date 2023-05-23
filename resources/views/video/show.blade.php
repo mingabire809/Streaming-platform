@@ -13,16 +13,46 @@
           <div>
             
           </div>
-          <div class="col-9" style="background-color: aquamarine">
-            <div class="h-25">
-              <div class="embed-responsive embed-responsive-16by9 col-12 h-100" style="background-color: blue">
-                
-                <iframe class="embed-responsive-item w-100 h-100" src="/storage/{{$video->video}}" allowfullscreen></iframe>
-              </div>
-            </div>
-            <div class="d-flex justify-content-between">
-              <button class="btn btn-primary">Previous</button>
-              <button class="btn btn-primary">Next</button>
+          <div class="col-9">
+            
+
+              <video controls class="col-12" autoplay>
+                <source src="/storage/{{$video->video}}" type="video/mp4">
+              </video>
+              
+              @php
+                  $nextIndex = $index + 1;
+                  $hasNextIndex = $nextIndex < count($array);
+                  $nextElementId = $hasNextIndex ? $array[$nextIndex] : null;
+
+                  $previousIndex = $index - 1;
+                  $hasPreviousIndex = $previousIndex >= 0;
+                  $previousElementId = $hasPreviousIndex ? $array[$previousIndex] : null;
+              @endphp
+
+            <div class="d-flex col-sm-6 col-12 justify-content-between">
+             
+
+              @if ($hasPreviousIndex)
+                <form action="/video/{{$previousElementId}}" method="GET">
+                  
+                <button class="btn btn-primary" type="submit">Previous</button>
+                </form>
+                  @else
+                    <button class="btn btn-primary" disabled>Previous</button>
+                  @endif
+              
+              
+              @if ($hasNextIndex)
+                <form action="/video/{{$nextElementId}}" method="GET">
+                  
+                <button class="btn btn-primary" type="submit">Next</button>
+                </form>
+                  @else
+                    <button class="btn btn-primary" disabled>Next</button>
+                  @endif
+
+
             </div>
     
               <h4 class="mt-3 text-left font-weight-bolder">{{$video->title}}</h4>
@@ -38,7 +68,7 @@
               <div class="mb-4">
                 <h6 class="font-weight-bolder">{{$comment->user->name}}</h6>
                 <p>{{$comment->comment}}</p>
-                <p class="">Added on: {{$comment->created_at}}</p>
+                <p class="">{{$comment->created_at -> diffForHumans($today)}}</p>
               </div>
               @endforeach
               

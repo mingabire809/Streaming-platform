@@ -12,16 +12,46 @@
           <div>
             
           </div>
-          <div class="col-9" style="background-color: aquamarine">
-            <div class="h-25">
-              <div class="embed-responsive embed-responsive-16by9 col-12 h-100" style="background-color: blue">
-                
-                <iframe class="embed-responsive-item w-100 h-100" src="/storage/<?php echo e($video->video); ?>" allowfullscreen></iframe>
-              </div>
-            </div>
-            <div class="d-flex justify-content-between">
-              <button class="btn btn-primary">Previous</button>
-              <button class="btn btn-primary">Next</button>
+          <div class="col-9">
+            
+
+              <video controls class="col-12" autoplay>
+                <source src="/storage/<?php echo e($video->video); ?>" type="video/mp4">
+              </video>
+              
+              <?php
+                  $nextIndex = $index + 1;
+                  $hasNextIndex = $nextIndex < count($array);
+                  $nextElementId = $hasNextIndex ? $array[$nextIndex] : null;
+
+                  $previousIndex = $index - 1;
+                  $hasPreviousIndex = $previousIndex >= 0;
+                  $previousElementId = $hasPreviousIndex ? $array[$previousIndex] : null;
+              ?>
+
+            <div class="d-flex col-sm-6 col-12 justify-content-between">
+             
+
+              <?php if($hasPreviousIndex): ?>
+                <form action="/video/<?php echo e($previousElementId); ?>" method="GET">
+                  
+                <button class="btn btn-primary" type="submit">Previous</button>
+                </form>
+                  <?php else: ?>
+                    <button class="btn btn-primary" disabled>Previous</button>
+                  <?php endif; ?>
+              
+              
+              <?php if($hasNextIndex): ?>
+                <form action="/video/<?php echo e($nextElementId); ?>" method="GET">
+                  
+                <button class="btn btn-primary" type="submit">Next</button>
+                </form>
+                  <?php else: ?>
+                    <button class="btn btn-primary" disabled>Next</button>
+                  <?php endif; ?>
+
+
             </div>
     
               <h4 class="mt-3 text-left font-weight-bolder"><?php echo e($video->title); ?></h4>
@@ -37,7 +67,7 @@
               <div class="mb-4">
                 <h6 class="font-weight-bolder"><?php echo e($comment->user->name); ?></h6>
                 <p><?php echo e($comment->comment); ?></p>
-                <p class="">Added on: <?php echo e($comment->created_at); ?></p>
+                <p class=""><?php echo e($comment->created_at -> diffForHumans($today)); ?></p>
               </div>
               <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
               
