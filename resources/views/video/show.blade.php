@@ -82,6 +82,11 @@
                   <textarea name="comment" id="comment" class="form-control" rows="5" style="resize: none"
                   type="text" class="form-control @error('comment') is-invalid @enderror" title="comment" autocomplete="comment" autofocus required
                   ></textarea>
+                  @error('comment')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
                   <button type="submit" class="btn btn-secondary align-bottom mt-3 mb-3">Add Comment</button>
                 
               </form>

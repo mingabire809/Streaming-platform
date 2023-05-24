@@ -80,6 +80,10 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="/my-video">
+                                        My Videos
+                                    </a>
+
                                     <a class="dropdown-item" href="<?php echo e(route('logout')); ?>"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -91,7 +95,9 @@
                                         <?php echo csrf_field(); ?>
                                     </form>
                                 </div>
+                                
                             </li>
+                            
                         <?php endif; ?>
                     </ul>
                 </div>
