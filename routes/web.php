@@ -25,6 +25,7 @@ Route::get('/', [App\Http\Controllers\VideoViewerController::class, 'index']);
 Route::get('/my-video', [App\Http\Controllers\MyVideosController::class, 'myvideo']);
 Route::get('/my-video/{video}', [App\Http\Controllers\MyVideosController::class, 'singlevideo']);
 Route::patch('/my-video/edit/{video}', [App\Http\Controllers\MyVideosController::class, 'editvideo']);
+Route::delete('/my-video/delete/{video}', [App\Http\Controllers\MyVideosController::class, 'deletevideo']);
 
 Route::get('/search', [App\Http\Controllers\VideoViewerController::class, 'search']);
 Route::get('/video/{video}', [App\Http\Controllers\VideoViewerController::class, 'show']);

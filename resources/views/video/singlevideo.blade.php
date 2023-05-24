@@ -54,30 +54,47 @@
 
 
             </div>
-                <form action="/my-video/edit/{{$video->id}}" class="col-6 mt-3" enctype="multipart/form-data" method="post">
-                    @csrf
-                    @method('PATCH')
-                    <div class="row">
-                        <h4>Edit title</h4>
-                    </div>
-                    <div class="mb-5">
-                        <label for="title" class="col-md-4 col-form-label">Title</label>
-                        <input type="text"
-                         class="form-control @error('title') is-invalid @enderror"  
-                         name="title" id="title" 
-                         value="{{old('title') ?? $video->title}}"
-                         autocomplete="title" autofocus>
-                         @error('title')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-    
-                        <button class="btn btn-secondary mt-2">Save changes</button>
-                    </div>
-                   
-                    
-                </form>
+
+                <div class="row align-items-center">
+                    <form action="/my-video/edit/{{$video->id}}" class="col-6 mt-3" enctype="multipart/form-data" method="post">
+                        @csrf
+                        @method('PATCH')
+                        <div class="row">
+                            <h4>Edit title</h4>
+                        </div>
+                        <div class="mb-5">
+                            <label for="title" class="col-md-4 col-form-label">Title</label>
+                            <input type="text"
+                             class="form-control @error('title') is-invalid @enderror"  
+                             name="title" id="title" 
+                             value="{{old('title') ?? $video->title}}"
+                             autocomplete="title" autofocus>
+                             @error('title')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+        
+                            <button class="btn btn-secondary mt-2">Save changes</button>
+                        </div>
+                       
+                        
+                    </form>
+
+                    <form action="/my-video/delete/{{$video->id}}" class="col-6 mt-3" enctype="multipart/form-data" method="post">
+                        @csrf
+                        @method('DELETE')
+                        
+                        <div class="">
+                            
+        
+                            <button class="btn btn-danger">Delete</button>
+                        </div>
+                       
+                        
+                    </form>
+                </div>
+                
               <h4 class="mt-3 text-left font-weight-bolder">{{$video->title}}</h4>
               <h6 class="mt-2">Uploaded on: {{$video->created_at}}</h6>
               <h6 class="mt-2">Updated on: {{$video->updated_at}}</h6>

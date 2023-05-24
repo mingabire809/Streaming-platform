@@ -64,4 +64,16 @@ class MyVideosController extends Controller
     }
 
 
+    public function deletevideo(\App\Models\Video $video){
+        $user = auth()->user();
+        if($user->id == $video->user_id){
+            
+            $video->delete();
+            return redirect('/my-video');
+        }else{
+            abort(403, 'Unauthorized');
+        }
+    }
+
+
 }

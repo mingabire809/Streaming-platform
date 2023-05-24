@@ -53,16 +53,18 @@
 
 
             </div>
-                <form action="/my-video/edit/<?php echo e($video->id); ?>" class="col-6 mt-3" enctype="multipart/form-data" method="post">
-                    <?php echo csrf_field(); ?>
-                    <?php echo method_field('PATCH'); ?>
-                    <div class="row">
-                        <h4>Edit title</h4>
-                    </div>
-                    <div class="mb-5">
-                        <label for="title" class="col-md-4 col-form-label">Title</label>
-                        <input type="text"
-                         class="form-control <?php $__errorArgs = ['title'];
+
+                <div class="row align-items-center">
+                    <form action="/my-video/edit/<?php echo e($video->id); ?>" class="col-6 mt-3" enctype="multipart/form-data" method="post">
+                        <?php echo csrf_field(); ?>
+                        <?php echo method_field('PATCH'); ?>
+                        <div class="row">
+                            <h4>Edit title</h4>
+                        </div>
+                        <div class="mb-5">
+                            <label for="title" class="col-md-4 col-form-label">Title</label>
+                            <input type="text"
+                             class="form-control <?php $__errorArgs = ['title'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -70,27 +72,42 @@ $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>"  
-                         name="title" id="title" 
-                         value="<?php echo e(old('title') ?? $video->title); ?>"
-                         autocomplete="title" autofocus>
-                         <?php $__errorArgs = ['title'];
+                             name="title" id="title" 
+                             value="<?php echo e(old('title') ?? $video->title); ?>"
+                             autocomplete="title" autofocus>
+                             <?php $__errorArgs = ['title'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?>
-                                <span class="invalid-feedback" role="alert">
-                                    <strong><?php echo e($message); ?></strong>
-                                </span>
-                            <?php unset($message);
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong><?php echo e($message); ?></strong>
+                                    </span>
+                                <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
-    
-                        <button class="btn btn-secondary mt-2">Save changes</button>
-                    </div>
-                   
-                    
-                </form>
+        
+                            <button class="btn btn-secondary mt-2">Save changes</button>
+                        </div>
+                       
+                        
+                    </form>
+
+                    <form action="/my-video/delete/<?php echo e($video->id); ?>" class="col-6 mt-3" enctype="multipart/form-data" method="post">
+                        <?php echo csrf_field(); ?>
+                        <?php echo method_field('DELETE'); ?>
+                        
+                        <div class="">
+                            
+        
+                            <button class="btn btn-danger">Delete</button>
+                        </div>
+                       
+                        
+                    </form>
+                </div>
+                
               <h4 class="mt-3 text-left font-weight-bolder"><?php echo e($video->title); ?></h4>
               <h6 class="mt-2">Uploaded on: <?php echo e($video->created_at); ?></h6>
               <h6 class="mt-2">Updated on: <?php echo e($video->updated_at); ?></h6>
