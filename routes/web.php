@@ -36,4 +36,7 @@ Route::get('/comment', [App\Http\Controllers\CommentsController::class, 'index']
 Route::post('/video', [App\Http\Controllers\VideoController::class, 'store']);
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+Route::post('/like/{video}', [App\Http\Controllers\VideoController::class, 'like']);
+Route::post('/dislike/{video}', [App\Http\Controllers\VideoController::class, 'dislike']);
+
 

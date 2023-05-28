@@ -36,17 +36,41 @@ class VideoViewerController extends Controller
     public function show(\App\Models\Video $video){
         //$post = Post::find($id);
         //return $video;
+        $user = auth()->user();
         $today = Carbon::now();
         $difference = $video->created_at -> diffForHumans($today);
         $videos = Video::whereNotIn('id', $video)->latest()->get();
         $array = Video::pluck('id')->toArray();
         $elements = $video->id;
         $index = array_search($elements, $array);
+        $like = $video->likes()->where('type', 'like')->count();
+        $dislike = $video->likes()->where('type', 'dislike')->count();
         
         $comments = $video->comment;
+
+        
+
+        
+
+        if($user ==null){
+            $existingDisLike = false;
+            $existingLike = false;
+        }else{
+            $existingDisLike = $video->likes()
+            ->where('user_id', $user->id)
+            ->where('type', 'dislike')
+            ->first();
+
+            $existingLike = $video->likes()
+            ->where('user_id', $user->id)
+            ->where('type', 'like')
+            ->first();
+        }
+
+       
         
         //$comments = Comment::whereIn('video_id', $video)->latest()->get();
         //return $array;
-        return view('video.show', compact('video', 'difference', 'videos', 'comments', 'index', 'today', 'array'));
+        return view('video.show', compact('video', 'difference', 'videos', 'comments', 'index', 'today', 'array', 'like', 'dislike', 'existingLike', 'existingDisLike'));
     }
 }

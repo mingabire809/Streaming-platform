@@ -17,4 +17,12 @@ class Video extends Model
     public function comment(){
         return $this->hasMany(Comment::class)->orderBy('created_at', 'DESC');
       }
+
+    public function likes(){
+        return $this->hasMany(LikedVideos::class);
+    }
+
+    public function dislikes(){
+        return $this->hasMany(LikedVideos::class);
+    }
 }

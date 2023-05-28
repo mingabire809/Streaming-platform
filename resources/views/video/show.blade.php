@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 
-<div class="container">
+<div class="container overflow-hidden">
   <script>
     function scrollToTop() {
         window.scrollTo(0, 0);
@@ -19,7 +19,49 @@
               <video controls class="col-12" autoplay>
                 <source src="/storage/{{$video->video}}" type="video/mp4">
               </video>
-              
+              <div class="d-flex col-3 justify-content-between align-items-center mb-3">
+                <form action="/like/{{$video->id}}" method="POST">
+                  @csrf
+                  <button type="submit" class="btn btn-outline-success justify-content-between" id="like">
+                    
+                    
+                    @if ($existingLike)
+                      <i class="fas fa-regular fa-thumbs-up"></i>
+                    
+                    
+                      <i class="fas fa-thin fa-check" style="margin-left: 5px"></i>
+
+                    @else
+                      <i class="fas fa-regular fa-thumbs-up"></i>
+                    @endif
+                    
+                    
+                  </button>
+                </form>
+                {{$like}}
+                
+                <form action="/dislike/{{$video->id}}" method="POST" >
+                  @csrf
+                  <button type="submit" class="btn btn-outline-danger" id="dislike">
+                    
+                    @if ($existingDisLike)
+                    <i class="fas fa-light fa-thumbs-down"></i>
+                    
+                    <i class="fas fa-thin fa-check" style="margin-left: 5px"></i>
+
+                    @else
+                      <i class="fas fa-light fa-thumbs-down"></i>
+                    @endif
+
+                    
+                  </button>
+                </form>
+                {{$dislike}}
+                
+
+                
+              </div>
+
               @php
                   $nextIndex = $index + 1;
                   $hasNextIndex = $nextIndex < count($array);
@@ -94,7 +136,7 @@
               
         </div>
 
-        <div class="col-3">
+        <div class="col-3 overflow-hidden">
 
           @foreach($videos as $video)
           <div class="col-12 mb-3 text-align-center">

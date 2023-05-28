@@ -6,11 +6,12 @@ use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Facades\Storage;
 
 
+
 use App\Models\Video;
 use FFMpeg\FFMpeg;
 use FFMpeg\Coordinate\TimeCode;
 use FFMpeg\Format\Video\X264;
-
+use App\Models\LikedVideos;
 
 
 use Illuminate\Http\Request;
@@ -123,4 +124,89 @@ class VideoController extends Controller
     public function create(){
         return view('video.create');
     }
+
+    public function like(Request $request, Video $video)
+    {
+        $user = auth()->user();
+
+        $existingDisLike = $video->likes()
+        ->where('user_id', $user->id)
+        ->where('type', 'dislike')
+        ->first();
+
+        if ($existingDisLike) {
+        // Remove the existing like
+        $existingDisLike->delete();
+        
+        // Create a new like
+        $like = new LikedVideos();
+        $like->user_id = $user->id;
+        $like->video_id = $video->id;
+        $like->type = 'like';
+        $like->save();
+        
+        return redirect('/video/' . $video->id);
+    } else {
+        if (!$video->likes()->where('user_id', $user->id)->exists()) {
+            $like = new LikedVideos();
+            $like->user_id = $user->id;
+            $like->video_id = $video->id;
+            $like->type = 'like';
+            $like->save();
+
+            // You can return a success message or redirect the user as needed
+            return redirect('/video/' . $video->id);
+        }else{
+            // Handle the case where the user has already liked the video
+            return redirect('/video/' . $video->id);
+        }
+    }
+        
+        
+        
+
+        
+    }
+
+    public function dislike(Request $request, Video $video)
+    {
+        $user = auth()->user();
+
+        $existingLike = $video->likes()
+        ->where('user_id', $user->id)
+        ->where('type', 'like')
+        ->first();
+
+         if ($existingLike) {
+        // Remove the existing like
+        $existingLike->delete();
+        
+        // Create a new dislike
+        $dislike = new LikedVideos();
+        $dislike->user_id = $user->id;
+        $dislike->video_id = $video->id;
+        $dislike->type = 'dislike';
+        $dislike->save();
+        
+        return redirect('/video/' . $video->id);
+    } else {
+        if (!$video->likes()->where('user_id', $user->id)->exists()) {
+            $like = new LikedVideos();
+            $like->user_id = $user->id;
+            $like->video_id = $video->id;
+            $like->type = 'dislike';
+            $like->save();
+
+            return redirect('/video/' . $video->id);
+            // You can return a success message or redirect the user as needed
+        }else{
+
+        // Handle the case where the user has already disliked the video
+        return redirect('/video/' . $video->id);
+        }
+    }
+        
+        
+    }
+
 }

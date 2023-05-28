@@ -64,4 +64,12 @@ class User extends Authenticatable
     public function comment(){
         return $this->hasMany(Comment::class)->orderBy('created_at', 'DESC');
     }
+
+    //public function likedvideos(){
+    //    return $this->belongsToMany(Video::class);
+    //}
+
+    //public function dislikedvideos(){
+    //    return $this->belongsToMany(Video::class);
+    //}
 }

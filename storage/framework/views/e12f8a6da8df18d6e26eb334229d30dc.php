@@ -1,6 +1,6 @@
 <?php $__env->startSection('content'); ?>
 
-<div class="container">
+<div class="container overflow-hidden">
   <script>
     function scrollToTop() {
         window.scrollTo(0, 0);
@@ -18,7 +18,51 @@
               <video controls class="col-12" autoplay>
                 <source src="/storage/<?php echo e($video->video); ?>" type="video/mp4">
               </video>
-              
+              <div class="d-flex col-3 justify-content-between align-items-center mb-3">
+                <form action="/like/<?php echo e($video->id); ?>" method="POST">
+                  <?php echo csrf_field(); ?>
+                  <button type="submit" class="btn btn-outline-success justify-content-between" id="like">
+                    
+                    
+                    <?php if($existingLike): ?>
+                      <i class="fas fa-regular fa-thumbs-up"></i>
+                    
+                    
+                      <i class="fas fa-thin fa-check" style="margin-left: 5px"></i>
+
+                    <?php else: ?>
+                      <i class="fas fa-regular fa-thumbs-up"></i>
+                    <?php endif; ?>
+                    
+                    
+                  </button>
+                </form>
+                <?php echo e($like); ?>
+
+                
+                <form action="/dislike/<?php echo e($video->id); ?>" method="POST" >
+                  <?php echo csrf_field(); ?>
+                  <button type="submit" class="btn btn-outline-danger" id="dislike">
+                    
+                    <?php if($existingDisLike): ?>
+                    <i class="fas fa-light fa-thumbs-down"></i>
+                    
+                    <i class="fas fa-thin fa-check" style="margin-left: 5px"></i>
+
+                    <?php else: ?>
+                      <i class="fas fa-light fa-thumbs-down"></i>
+                    <?php endif; ?>
+
+                    
+                  </button>
+                </form>
+                <?php echo e($dislike); ?>
+
+                
+
+                
+              </div>
+
               <?php
                   $nextIndex = $index + 1;
                   $hasNextIndex = $nextIndex < count($array);
@@ -107,7 +151,7 @@ unset($__errorArgs, $__bag); ?>
               
         </div>
 
-        <div class="col-3">
+        <div class="col-3 overflow-hidden">
 
           <?php $__currentLoopData = $videos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $video): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
           <div class="col-12 mb-3 text-align-center">
